@@ -1,6 +1,6 @@
 # AudioSystem.js
 
-A lightweight audio system for the Web Audio API, supporting multiple simultaneous sound instances, volume control, fade in/out, and automatic background tab suspension.
+A lightweight audio system for the Web Audio API, supporting multiple simultaneous sound instances, volume control and fade in/out.
 
 ## Features
 
