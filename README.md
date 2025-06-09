@@ -30,7 +30,7 @@ AudioSystem.createAudioContext();
 
 ### 3. Load Sounds
 
-Load sound files (by default located at `./sounds/<path>`).
+Load sound files (by default located at `./sounds/<path>`):
 
 ```js
 await AudioSystem.asyncLoadSounds({
@@ -48,6 +48,8 @@ await AudioSystem.asyncLoadSounds({
 ```
 
 ### 4. Play a Sound
+
+Play sounds with the following parameters:
 
 | Parameter         | Type       | Description                                                                                          | Default      |
 | ----------------- | ---------- | ---------------------------------------------------------------------------------------------------- | ------------ |
@@ -67,10 +69,14 @@ AudioSystem.play('music__background', 1, true, 'music');
 
 ### 5. Stop Sounds
 
-```js
-// Stop all sounds
-AudioSystem.stop();
+Stop all sounds:
 
-// Stop a tagged sound
+```js
+AudioSystem.stop();
+```
+
+Stop a tagged sound:
+
+```js
 AudioSystem.stop('music');
 ```
