@@ -1,3 +1,11 @@
+/**
+ * @file AudioSystem.js
+ * @version 1.0.0
+ * @license MIT
+ * @see {@link https://github.com/Donitzo/js-game-framework}
+ * @repository https://github.com/Donitzo/js-game-framework
+ */
+
 export default class AudioSystem {
     static #soundDirectory = './sounds';
     static #preventCaching = false;
