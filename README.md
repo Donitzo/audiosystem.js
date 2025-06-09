@@ -22,8 +22,9 @@ import AudioSystem from './audiosystem.js';
 
 ### 2. Initialize AudioSystem
 
+Create the AudioContext object.
+
 ```js
-// Must be called before loading or playing sounds
 AudioSystem.createAudioContext();
 ```
 
