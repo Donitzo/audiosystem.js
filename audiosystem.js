@@ -238,19 +238,27 @@ export default class AudioSystem {
 
     /**
      * Stop all sound instances or sound instances identified by a tag.
-     * @param {object} [tag] - A tag identifying the sound instances to stop if not null.
+     * @param {object|string|null} [target] - A tag (string) or a sound instance object.
      * @param {number} [fadeOutSeconds] - The number of seconds over which to fade out the sound instances.
      */
-    static stop(tag = null, fadeOutSeconds = 0) {
+    static stop(tagOrInstance = null, fadeOutSeconds = 0) {
         const ac = AudioSystem.getAudioContext();
 
         for (let i = AudioSystem.#soundInstances.length - 1; i > -1; i--) {
             const instance = AudioSystem.#soundInstances[i];
 
-            if (instance.stopping || tag !== null && instance.tag !== tag) {
+            if (instance.stopping) {
                 continue;
             }
-
+    
+            const match =
+                tagOrInstance === null ||
+                (typeof tagOrInstance === 'string' && instance.tag === tagOrInstance) ||
+                (typeof tagOrInstance === 'object' && instance === tagOrInstance);
+            if (!match) {
+                continue;
+            }
+            
             instance.stopping = true;
 
             if (fadeOutSeconds <= 0) {
