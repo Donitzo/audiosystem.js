@@ -64,7 +64,7 @@ Play sounds with the following parameters:
 
 ```js
 AudioSystem.play('effect__click');
-AudioSystem.play('music__background', 1, true, 'music');
+const music = AudioSystem.play('music__background', 1, true, 'music');
 ```
 
 ### 5. Stop Sounds
@@ -75,8 +75,14 @@ Stop all sounds:
 AudioSystem.stop();
 ```
 
-Stop a tagged sound:
+Stop all sounds with a specific tag:
 
 ```js
 AudioSystem.stop('music');
+```
+
+or a specific sound instance:
+
+```js
+AudioSystem.stop(music);
 ```
