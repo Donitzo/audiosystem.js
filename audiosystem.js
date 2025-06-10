@@ -102,6 +102,10 @@ export default class AudioSystem {
 
         AudioSystem.getAudioContext();
 
+        if (AudioSystem.#gain === null) {
+            return;
+        }
+        
         AudioSystem.#gain.gain.value = volume;
 
         if (volume <= 0 && AudioSystem.#gainConnected) {
@@ -237,12 +241,15 @@ export default class AudioSystem {
     }
 
     /**
-     * Stop all sound instances or sound instances identified by a tag.
-     * @param {object|string|null} [target] - A tag (string) or a sound instance object.
-     * @param {number} [fadeOutSeconds] - The number of seconds over which to fade out the sound instances.
+     * Stops all sound instances, or only those identified by a tag or sound instance reference.
+     * @param {object|string|null} [target] - A tag, a sound instance object, or null to stop all.
+     * @param {number} [fadeOutSeconds=0] - Number of seconds to fade out before stopping.
+     * @returns {boolean} - Returns if at least one sound was stopped.
      */
     static stop(tagOrInstance = null, fadeOutSeconds = 0) {
         const ac = AudioSystem.getAudioContext();
+
+        let stopped = false;
 
         for (let i = AudioSystem.#soundInstances.length - 1; i > -1; i--) {
             const instance = AudioSystem.#soundInstances[i];
@@ -260,6 +267,7 @@ export default class AudioSystem {
             }
             
             instance.stopping = true;
+            stopped = true;
 
             if (fadeOutSeconds <= 0) {
                 instance.source.stop();
@@ -269,6 +277,8 @@ export default class AudioSystem {
                 instance.source.stop(ac.currentTime + fadeOutSeconds);
             }
         }
+
+        return stopped;
     }
 
     static isTagPlaying(tag) {
