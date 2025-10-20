@@ -10,6 +10,7 @@ export default class AudioSystem {
     static #soundDirectory = './sounds';
     static #preventCaching = false;
 
+    static #hasFiredReadyEvent = false;
     static #suspendInBackground = true;
 
     static #ac = null;
@@ -60,6 +61,11 @@ export default class AudioSystem {
                 ac.resume().finally(() => {
                     AudioSystem.#acResuming = false;
                 });
+
+                if (ac.state === 'running' && !AudioSystem.#hasFiredReadyEvent) {
+                    AudioSystem.#hasFiredReadyEvent = true;
+                    window.dispatchEvent(new Event('audioready'));
+                }
             }
         };
 
