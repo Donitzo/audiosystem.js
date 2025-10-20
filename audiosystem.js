@@ -58,9 +58,14 @@ export default class AudioSystem {
             if (ac.state === 'suspended' && !AudioSystem.#acResuming) {
                 AudioSystem.#acResuming = true;
 
-                ac.resume().finally(() => {
-                    AudioSystem.#acResuming = false;
-                });
+                ac.resume()
+                    .then(() => {
+                        AudioSystem.#hasFiredReadyEvent = true;
+                        window.dispatchEvent(new Event('audioready'));
+                    })
+                    .finally(() => {
+                        AudioSystem.#acResuming = false;
+                    });
 
                 if (ac.state === 'running' && !AudioSystem.#hasFiredReadyEvent) {
                     AudioSystem.#hasFiredReadyEvent = true;
