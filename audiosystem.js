@@ -60,17 +60,19 @@ export default class AudioSystem {
 
                 ac.resume()
                     .then(() => {
-                        AudioSystem.#hasFiredReadyEvent = true;
-                        window.dispatchEvent(new Event('audioready'));
+                        if (ac.state === 'running' && !AudioSystem.#hasFiredReadyEvent) {
+                            AudioSystem.#hasFiredReadyEvent = true;
+                            window.dispatchEvent(new Event('audioready'));
+                        }
                     })
                     .finally(() => {
                         AudioSystem.#acResuming = false;
                     });
+            }
 
-                if (ac.state === 'running' && !AudioSystem.#hasFiredReadyEvent) {
-                    AudioSystem.#hasFiredReadyEvent = true;
-                    window.dispatchEvent(new Event('audioready'));
-                }
+            if (ac.state === 'running' && !AudioSystem.#hasFiredReadyEvent) {
+                AudioSystem.#hasFiredReadyEvent = true;
+                window.dispatchEvent(new Event('audioready'));
             }
         };
 
